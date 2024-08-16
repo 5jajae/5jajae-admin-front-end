@@ -1,9 +1,5 @@
-function StoreDetail() {
-    return (
-     <div>Store detail page</div>
-     
-    )
-  }
-  
-  export default StoreDetail
-  
+const StoreDetail = () => {
+  return <div>Store detail page</div>;
+};
+
+export default StoreDetail;

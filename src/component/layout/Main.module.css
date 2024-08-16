@@ -1,0 +1,27 @@
+.wrapper {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    min-width: 260px;
+    background-color: #293042;
+}
+
+.main {
+    min-width: calc(100vw - 260px);
+    overflow-y: auto;
+}
+
+.main a {
+    text-decoration: none;
+}
+
+.main a:visited {
+    text-decoration: none;
+}
+
+.nav {
+    height: 5rem;
+    padding: 8px;
+}
