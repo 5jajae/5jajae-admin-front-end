@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StoreResponseForm, StoreSearchRequestForm } from '../../types/store/store.ts';
+import { StoreResponse, StoreSearchRequestForm } from '../../types/store/store.ts';
 import StoreService from '../../api/store/StoreService.ts';
 import { Col, Container, Row, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -15,14 +15,14 @@ const Stores = () => {
   } as StoreSearchRequestForm;
   const initCommand = () => storeSearchParam;
 
-  const [stores, setStores] = useState<StoreResponseForm[]>();
+  const [stores, setStores] = useState<StoreResponse[]>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
 
   const [command, setCommand] = useState<StoreSearchRequestForm>(initCommand);
 
   useEffect(() => {
     StoreService.getStores(command).then(({ data }) => {
-      setStores(data.content);
+      setStores(data.data);
       setTotalCount(data.pagination.totalElements);
     });
   }, [command]);
@@ -36,7 +36,7 @@ const Stores = () => {
           </Link>
         </Col>
       </Row>
-      <Row>
+      <Row className="mt-3">
         <Table hover striped bordered className="text-center">
           <colgroup>
             <col width={80} />

@@ -1,9 +1,14 @@
 import ApiClient from '../apiClient.ts';
-import { StorePageResponseForm, StoreResponseForm, StoreSearchRequestForm } from '../../types/store/store.ts';
+import {
+  StorePageResponseForm,
+  StoreResponseForm,
+  StoreSaveRequestForm,
+  StoreSearchRequestForm,
+} from '../../types/store/store.ts';
 
 class StoreService {
-  public saveStore() {
-    return ApiClient.post<void>('/v1/ojajae/admin/stores');
+  public saveStore(requestForm: StoreSaveRequestForm) {
+    return ApiClient.post<void>('/v1/ojajae/admin/stores', requestForm);
   }
 
   public getStores(requestForm: StoreSearchRequestForm) {
@@ -16,8 +21,8 @@ class StoreService {
     return ApiClient.get<StoreResponseForm>(`/v1/ojajae/admin/stores/${storeId}`);
   }
 
-  public updateStore() {
-    return ApiClient.put<void>('/v1/ojajae/admin/stores');
+  public updateStore(storeId: number, requestForm: StoreSaveRequestForm) {
+    return ApiClient.put<void>(`/v1/ojajae/admin/stores/${storeId}`, requestForm);
   }
 
   public deleteStore() {
