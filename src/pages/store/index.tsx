@@ -30,7 +30,10 @@ const Stores = () => {
   return (
     <Container fluid className="p-3">
       <Row>
-        <Col className="text-end">
+        <Col md={6} className="align-content-center">
+          <b>총 {totalCount}개</b>
+        </Col>
+        <Col md={6} className="text-end">
           <Link to="/stores/0" className="btn btn-primary">
             등록
           </Link>

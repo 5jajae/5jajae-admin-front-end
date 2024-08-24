@@ -32,6 +32,7 @@ const StoreDetail = () => {
   const [representativeName, setRepresentativeName] = useState<string | null>(null);
   const [identificationNumber, setIdentificationNumber] = useState<string | null>(null);
   const [items, setItems] = useState<string | null>(null);
+  const [isConstruction, setIsConstruction] = useState<string | null>(null);
 
   const [imageUrls, setImageUrls] = useState<StoreImageAdminResponse[] | null>(null);
 
@@ -146,6 +147,12 @@ const StoreDetail = () => {
     setItems(value);
   };
 
+  const handleIsConstructionSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target;
+
+    setIsConstruction(value);
+  };
+
   const handleItemTagSelect = (options: Option[]) => {
     setSelectedItemTagIds(options);
   };
@@ -208,6 +215,7 @@ const StoreDetail = () => {
       representativeName,
       identificationNumber,
       items,
+      isConstruction,
       imageUrls: uploadImageUrls,
       itemTagIds,
     } as StoreSaveRequestForm;
@@ -233,6 +241,10 @@ const StoreDetail = () => {
     setRepresentativeName(store.representativeName);
     setIdentificationNumber(store.identificationNumber);
     setItems(store.items);
+
+    if (store.isConstruction != null) {
+      setIsConstruction(`${store.isConstruction}`);
+    }
 
     setImageUrls(store.imageUrls);
   };
@@ -365,6 +377,20 @@ const StoreDetail = () => {
               <td>
                 <InlineForm width={300}>
                   <Form.Control type="text" value={items || ''} onChange={handleItemsInput} />
+                </InlineForm>
+              </td>
+            </tr>
+            <tr>
+              <td className="text-center">
+                <b>시공여부</b>
+              </td>
+              <td>
+                <InlineForm width={300}>
+                  <Form.Select value={isConstruction || ''} onChange={handleIsConstructionSelect}>
+                    <option value="">모름</option>
+                    <option value="true">가능</option>
+                    <option value="false">불가능</option>
+                  </Form.Select>
                 </InlineForm>
               </td>
             </tr>

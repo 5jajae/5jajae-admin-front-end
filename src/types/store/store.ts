@@ -38,6 +38,7 @@ export interface StoreResponse {
   representativeName: string | null;
   identificationNumber: string | null;
   items: string | null;
+  isConstruction: boolean | null;
 
   imageUrls: StoreImageAdminResponse[] | null;
   itemTagIds: number[];
