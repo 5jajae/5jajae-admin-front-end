@@ -17,6 +17,7 @@ export interface StoreSaveRequestForm {
   identificationNumber: string | null;
   items: string | null;
 
+  thumbnailImageUrl: string | null;
   imageUrls: string[] | null;
   itemTagIds: number[];
 }
@@ -40,6 +41,7 @@ export interface StoreResponse {
   items: string | null;
   isConstruction: boolean | null;
 
+  thumbnailImage: StoreImageAdminResponse | null;
   imageUrls: StoreImageAdminResponse[] | null;
   itemTagIds: number[];
 }

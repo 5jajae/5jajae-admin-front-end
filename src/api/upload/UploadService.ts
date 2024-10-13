@@ -27,6 +27,28 @@ class UploadService {
     return this.upload('stores', file);
   }
 
+  public storeUploadThumbnailImage(file: File) {
+    if (!file) {
+      console.error('file is empty');
+      return new Promise<AxiosResponse<FileUploadResponseForm>>((_, reject) => {
+        reject('file is empty');
+      });
+    }
+
+    if (!this.IMAGE_EXTENSIONS.includes(this.getFileExtension(file.name))) {
+      console.error(
+        `invalid extension\npossible extensions: ${this.IMAGE_EXTENSIONS.join(', ')}\ncurrent extension: ${this.getFileExtension(file.name)}`,
+      );
+      return new Promise<AxiosResponse<FileUploadResponseForm>>((_, reject) => {
+        reject(
+          `invalid extension\npossible extensions: ${this.IMAGE_EXTENSIONS.join(', ')}\ncurrent extension: ${this.getFileExtension(file.name)}`,
+        );
+      });
+    }
+
+    return this.upload('storeThumbnail', file);
+  }
+
   public itemTagsUploadImage(file: File) {
     if (!file) {
       console.error('file is empty');

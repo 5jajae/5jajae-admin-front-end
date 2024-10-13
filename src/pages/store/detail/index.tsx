@@ -34,6 +34,7 @@ const StoreDetail = () => {
   const [items, setItems] = useState<string | null>(null);
   const [isConstruction, setIsConstruction] = useState<string | null>(null);
 
+  const [thumbnailImageUrl, setThumbnailImageUrl] = useState<StoreImageAdminResponse | null>(null);
   const [imageUrls, setImageUrls] = useState<StoreImageAdminResponse[] | null>(null);
 
   const [itemTagOptions, setItemTagOptions] = useState<Option[]>([]);
@@ -190,6 +191,30 @@ const StoreDetail = () => {
     e.target.value = '';
   };
 
+  const thumbnailImageFileUploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+
+    if (files !== undefined && files !== null && files.length > 0) {
+      const file = files[0];
+
+      UploadService.storeUploadThumbnailImage(file).then(({ data }) => {
+        const { fileKey, fileUrl } = data.data;
+
+        setThumbnailImageUrl({
+          id: null,
+          fileKey,
+          imageUrl: fileUrl,
+        })
+      });
+    }
+
+    e.target.value = '';
+  };
+
+  const handleDeleteThumbnailImageButton = () => {
+    setThumbnailImageUrl(null);
+  };
+
   const handleDeleteImageButton = (fileKey: string) => {
     setImageUrls(imageUrls?.filter((file) => file.fileKey !== fileKey) || []);
   };
@@ -200,6 +225,7 @@ const StoreDetail = () => {
       return;
     }
 
+    const uploadThumbnailImageUrl = thumbnailImageUrl?.fileKey;
     const uploadImageUrls = imageUrls?.map((image) => image.fileKey);
     const itemTagIds = selectedItemTagIds.map((tag) => +tag.value);
 
@@ -216,6 +242,7 @@ const StoreDetail = () => {
       identificationNumber,
       items,
       isConstruction,
+      thumbnailImageUrl: uploadThumbnailImageUrl,
       imageUrls: uploadImageUrls,
       itemTagIds,
     } as StoreSaveRequestForm;
@@ -247,6 +274,7 @@ const StoreDetail = () => {
     }
 
     setImageUrls(store.imageUrls);
+    setThumbnailImageUrl(store.thumbnailImage);
   };
 
   const toList = () => navigate('/stores');
@@ -392,6 +420,55 @@ const StoreDetail = () => {
                     <option value="false">불가능</option>
                   </Form.Select>
                 </InlineForm>
+              </td>
+            </tr>
+            <tr>
+              <td className="text-center">
+                <b>썸네일 이미지 첨부</b>
+              </td>
+              <td>
+                <Row>
+                  <Col>
+                    <Button
+                      type="button"
+                      variant="primary"
+                      onClick={() => {
+                        const input = document.getElementById(imageInputId) as HTMLInputElement;
+                        if (!input) return;
+                        input.click();
+                      }}
+                    >
+                      이미지 추가
+                    </Button>
+                    <span> (이미지는 최대 1장까지 업로드 가능합니다)</span>
+                    <input
+                      type="file"
+                      id={imageInputId}
+                      accept="image/png, image/jpeg"
+                      onChange={thumbnailImageFileUploadHandler}
+                      style={{ display: 'none' }}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  {thumbnailImageUrl
+                    ? 
+                        <Row key={thumbnailImageUrl.fileKey} className="mt-2">
+                          <Image
+                            src={thumbnailImageUrl.imageUrl}
+                            alt="이미지"
+                            style={{
+                              maxWidth: '300px',
+                            }}
+                          />
+                          <InlineForm width={100}>
+                            <Button variant="outline-danger" onClick={() => handleDeleteThumbnailImageButton()}>
+                              삭제
+                            </Button>
+                          </InlineForm>
+                        </Row>
+                    : ''}
+                </Row>
               </td>
             </tr>
             <tr>
