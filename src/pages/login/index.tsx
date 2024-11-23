@@ -1,6 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { Button, Col, Container, Form, Image, Row, Table } from 'react-bootstrap';
-import InlineForm from '../../component/form/InlineForm.tsx';
+import { Button, Form, Image } from 'react-bootstrap';
 import { LoginRequestForm } from "../../types/login/login.ts";
 import LoginService from "../../api/login/LoginService.ts";
 import { useNavigate } from "react-router";

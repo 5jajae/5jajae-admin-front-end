@@ -17,6 +17,7 @@ const StoreDetail = () => {
   const { id } = useParams();
 
   const imageInputId = generateRandomString(20);
+  const thumbnailImageInputId = generateRandomString(20);
 
   // const [store, setStore] = useState<StoreResponseForm>();
   const [isNew, setIsNew] = useState<boolean>(false);
@@ -433,7 +434,7 @@ const StoreDetail = () => {
                       type="button"
                       variant="primary"
                       onClick={() => {
-                        const input = document.getElementById(imageInputId) as HTMLInputElement;
+                        const input = document.getElementById(thumbnailImageInputId) as HTMLInputElement;
                         if (!input) return;
                         input.click();
                       }}
@@ -443,7 +444,7 @@ const StoreDetail = () => {
                     <span> (이미지는 최대 1장까지 업로드 가능합니다)</span>
                     <input
                       type="file"
-                      id={imageInputId}
+                      id={thumbnailImageInputId}
                       accept="image/png, image/jpeg"
                       onChange={thumbnailImageFileUploadHandler}
                       style={{ display: 'none' }}
